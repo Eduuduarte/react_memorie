@@ -2,6 +2,23 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+### Create the project
+~~~bash
+npx create-react-app react_memoria --template typescript
+~~~
+
+#### Dependencies
+~~~bash
+npm install styled-components
+~~~
+
+#### devDependencies
+~~~bash
+npm install -D @types/styled-components
+~~~
+
+_________________________________________________________
+
 ## Available Scripts
 
 In the project directory, you can run:
