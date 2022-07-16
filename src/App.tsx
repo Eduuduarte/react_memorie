@@ -3,6 +3,7 @@ import logoImage from './assets/devmemory_logo.png';
 import RestartIcon from './svgs/restart.svg';
 import { Button } from './components/Button';
 import { InfoItem } from './components/InfoItem';
+import { GridItem } from './components/GridItem';
 import { useEffect, useState } from 'react';
 import { GridItemType } from './types/GridItemType';
 import { items } from './data/items';
@@ -21,6 +22,7 @@ const App = () => {
     setTimeElapsed(0);
     setMoveCount(0)
     setShowCount(0);
+    
     let tmpGrid: GridItemType[] = [];
     for(let i = 0; i < (items.length * 2); i++) tmpGrid.push({
         item: null, shown: false, permanentShown: false
@@ -39,6 +41,10 @@ const App = () => {
     setGridItems(tmpGrid);
 
     setPlaying(true);
+  }
+
+  const handleItemClick = (index: number) => {
+
   }
 
   return (
@@ -62,7 +68,13 @@ const App = () => {
       </C.Info>
       <C.GridArea>
         <C.Grid>
-
+          {gridItems.map((item, index)=>(
+            <GridItem 
+              key={index}
+              item={item}
+              onClick={() => handleItemClick(index)}
+            />
+          ))}
         </C.Grid>
       </C.GridArea>
     </C.Container>
