@@ -26,6 +26,48 @@ const App = () => {
     return () => clearInterval(timer);
   }, [playing, timeElapsed]);
 
+  //Verificar if opened are iqual
+  useEffect(() => {
+    if(showCount === 2) {
+      let opened = gridItems.filter(item => item.shown === true);
+      if(opened.length === 2) {
+
+        
+
+        if(opened[0].item === opened[1].item) {
+          let tmpGrid = [...gridItems];
+          // v1 - if both are equal, make every "shown" permanent
+          for(let i in tmpGrid) {
+            if(tmpGrid[i].shown) {
+              tmpGrid[i].permanentShown = true;
+              tmpGrid[i].shown = false;
+            }
+          }
+          setGridItems(tmpGrid);
+          setShowCount(0);
+        } else {
+          // v2 - if they are NOT equal, close all "shown"
+          setTimeout(() => {
+            let tmpGrid = [...gridItems];
+          for(let i in tmpGrid) {
+            tmpGrid[i].shown = false;
+          }
+          setGridItems(tmpGrid);
+          setShowCount(0);
+          }, 1000);
+        }
+
+        setMoveCount(moveCount => moveCount + 1);
+      }
+    }
+  }, [showCount, gridItems]);
+
+  useEffect(()=> {
+    if(moveCount > 0 && gridItems.every(item => item.permanentShown === true)){
+      setPlaying(false);
+    }
+  }, [moveCount, gridItems])
+
   const resetAndCreateGrid = () => {
     setTimeElapsed(0);
     setMoveCount(0)
@@ -71,7 +113,7 @@ const App = () => {
 
         <C.InfoArea>
           <InfoItem label="Tempo" value={formatTimeElapsed(timeElapsed)}/>
-          <InfoItem label="Movimentos" value='0'/>
+          <InfoItem label="Movimentos" value={moveCount.toString()}/>
         </C.InfoArea>
 
         <Button 
